@@ -8,11 +8,13 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Register from './pages/Register';
 import Home from './pages/Home';
+import Navbar from './components/Navbar';
 
 const App = () => {
     return (
         <Router>
             <AuthProvider>
+                <Navbar/>
                 <Routes>
                     {/* Rutas públicas */}
                     <Route path="/" element={<Home />} />

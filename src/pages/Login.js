@@ -32,7 +32,7 @@ const Login = () => {
         const { username, password } = formData;
 
         try {
-            const response = await fetch('http://localhost:8000/dariobox/access/login/', {
+            const response = await fetch('https://dariobox.onrender.com/dariobox/access/login/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
