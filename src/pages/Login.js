@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Verifica que esto esté importado
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -8,7 +8,14 @@ const Login = () => {
     });
     const [error, setError] = useState(null);
     const [message, setMessage] = useState(null);
-    const navigate = useNavigate(); // Usa 'navigate' aquí
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            navigate('/dashboard');
+        }
+    }, [navigate]);
 
     const handleChange = (e) => {
         setFormData({
@@ -35,7 +42,6 @@ const Login = () => {
 
             const result = await response.json();
             if (response.ok) {
-                // Guardar el token y los datos del usuario
                 localStorage.setItem('token', result.access);
                 localStorage.setItem('is_superuser', result.is_superuser);
 
@@ -45,8 +51,7 @@ const Login = () => {
                     setMessage('Hola Bienvenido');
                 }
 
-                // Redirigir a la página principal o dashboard
-                navigate('/dashboard'); // Usa 'navigate' para redirigir
+                navigate('/dashboard'); 
             } else {
                 setError(result.detail || 'Error en el login');
             }

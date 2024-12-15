@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import LogoutButton from "../components/LogoutButton";
 
 const Dashboard = () => {
     const [message, setMessage] = useState('');
@@ -14,6 +15,7 @@ const Dashboard = () => {
 
     return (
         <div>
+            <LogoutButton/>
             <h2>Dashboard</h2>
             <p>{message}</p>
         </div>

@@ -1,22 +1,24 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext } from 'react';
 
+// Crear el contexto
 const AuthContext = createContext();
 
-export const useAuth = () => useContext(AuthContext);
-
+// Proveedor del contexto
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('access_token'));
+    // Función para verificar si el token existe en el localStorage
+    const verifyToken = () => {
+        const token = localStorage.getItem('token');
+        return !!token; // Retorna true si el token existe, de lo contrario false
+    };
 
-  const login = () => setIsAuthenticated(true);
-  const logout = () => {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
-    setIsAuthenticated(false);
-  };
+    return (
+        <AuthContext.Provider value={{ verifyToken }}>
+            {children}
+        </AuthContext.Provider>
+    );
+};
 
-  return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
+// Hook para usar el contexto
+export const useAuth = () => {
+    return useContext(AuthContext);
 };
